@@ -12,7 +12,9 @@ class Diseases extends Doctrine_Record{
 	}//end setUp
 	
 	public function getDiseaseData(){
-		
+		$query = Doctrine_Query::create() -> select("Name, Type, Flag") -> from("Diseases");
+		$diseaseData = $query -> execute();
+		return $diseaseData;
 	}
 }
 
