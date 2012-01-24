@@ -18,6 +18,12 @@ class Districts extends Doctrine_Record {
 		$districtData = $query -> execute();
 		return $districtData;
 	}//end getAll
+	
+	public function getDistrictNames() {
+		$queryDistricts = Doctrine_Query::create() -> select("name") -> from("Districts");
+		$districtNames = $queryDistricts -> execute();
+		return $districtNames;
+	}//end getDistrictNames
 
 }//end class
 ?>
