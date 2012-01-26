@@ -13,7 +13,7 @@ class district_management extends MY_Controller {
 		$data = array();
 		$data['content_view'] = "district_listing_v";  
 		$data['districts'] = Districts::getDistrictNames();
-		$data['provinces'] = Province::getProvinceNames();
+		$data['mkoa'] = Province::getProvinceNames();
 		$this -> base_params($data);
 	}//end listing
 

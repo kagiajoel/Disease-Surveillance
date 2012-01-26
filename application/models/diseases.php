@@ -3,18 +3,19 @@ class Diseases extends Doctrine_Record{
 	
 	public function setTableDefinition(){
 		$this -> hasColumn('Name', 'varchar', 100);
-		$this -> hasColumn('Type', 'int', 32);
-		$this -> hasColumn('Flag', 'int', 1);
+		$this -> hasColumn('Type', 'varchar', 32);
+		$this -> hasColumn('Description', 'text');
+		$this -> hasColumn('Flag', 'text');
 	}//end setTableDefinition
 	
 	public function setUp(){
 		$this -> hasTableName("diseases");
 	}//end setUp
 	
-	public function getDiseaseData(){
-		$query = Doctrine_Query::create() -> select("Name, Type, Flag") -> from("Diseases");
-		$diseaseData = $query -> execute();
-		return $diseaseData;
+	public function getAll(){
+		$query = Doctrine_Query::create() -> select("*") -> from("Diseases");
+		$diseases = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
+		return $diseases;
 	}
 }
 
