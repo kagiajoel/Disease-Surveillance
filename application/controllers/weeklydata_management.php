@@ -16,8 +16,8 @@ class weeklydata_management extends MY_Controller{
 	
 	public function add(){
 		$provinces = Province::getAll();
-		$districts = Districts::getspecifiedDistrict();
-		$diseases = Diseases::getAll();
+		$districts = Districts::getAll();
+		$diseases = Diseases::getAllObjects();
 		
 		$data['content-view'] = "weeklydata_add_v";
 		$data['title'] = "Add Weekly Data";
@@ -29,16 +29,16 @@ class weeklydata_management extends MY_Controller{
 	
 	public function save(){
 		$i = 0;
-		$diseases = Diseases::getAll();
+		//$diseases = Diseases::getAll();
 		$valid = $this -> _validate_submission();
 		if($valid == false){
 			$data['content-view'] = "weeklydata_add_v";
 			$this -> base_params($data);
 		}else{
-			foreach($diseases as $disease){
+			$diseases = new Diseases();
+			$i = 0;
 			$weekending = $this -> input -> post("weekending");
 			$epiweek = $this -> input -> post("epiweek");
-			$province = $this -> input -> post("province");
 			$district = $this -> input -> post("district");
 			$reportingfacilities = $this -> input -> post("reportingfacilities");
 			$expectedfacilities = $this -> input -> post("expectedfacilities");
@@ -50,18 +50,58 @@ class weeklydata_management extends MY_Controller{
 			$gfcase = $this -> input -> post("gfcase");
 			$gmdeath = $this -> input -> post("gmdeath");
 			$gfdeath = $this -> input -> post("gfdeath");
-			$sickness = $this -> input -> post($disease);
-						
+			$sickness = $this -> input -> post("disease");
+			
+			foreach($diseases as $disease){
+		
+			
+			$surveillance = new Surveillance();
+			$surveillance -> Week_Ending = $weekending;
+			$surveillance -> Epiweek = $epiweek;
+			$surveillance -> District = $district;
+			$surveillance -> Submitted = $reportingfacilities;
+			$surveillance -> Expected = $expectedfacilities;
+			$surveillance -> Lmcase = $lmcase[$i];
+			$surveillance -> Lfcase = $lfcase[$i];
+			$surveillance -> Lmdeath = $lmdeath[$i];
+			$surveillance -> Lfdeath = $lfdeath[$i];
+			$surveillance -> Gmcase = $gmcase[$i];
+			$surveillance -> Gfcase = $gfcase[$i];
+			$surveillance -> Gmdeath = $gmdeath[$i];
+			$surveillance -> Gfdeath = $gfdeath[$i];						
+			$surveillance -> Disease = $sickness;		
+			$surveillance -> save();	
+			$i++;			
 			}//end foreach
 			
 			//Lab Data
+			$labdata = new Lab_Weekly();
+			$epiweek = $this -> input -> post("epiweek");
+			$weekending = $this -> input -> post("weekending");
+			$district = $this -> input -> post("district");
+			
 			$totaltestedlessfive = $this -> input -> post("totaltestedlessfive");
 			$totaltestedgreaterfive = $this -> input -> post("totaltestedgreaterfive");
 			$totalpositivelessfive = $this -> input -> post("totalpostitivelessfive");
 			$totalpositivegreaterfive = $this -> input -> post("totalpositivegreaterfive");
 			$remarks = $this -> input -> post("remarks");
-			$reporter = $this -> input -> post("reporter");
-			$designation =$this -> input -> post("designation");
+			
+			$labdata -> Epiweek = $epiweek;
+			$labdata -> Weekending = $weekending;
+			$labdata -> District = $district;
+			$labdata -> Malaria_below_5 = $totaltestedlessfive;
+			$labdata -> Malaria_above_5 = $totaltestedgreaterfive;
+			$labdata -> Positive_below_5 = $totalpositivelessfive;
+			$labdata -> Positive_above_5 = $totalpositivegreaterfive;
+			$labdata -> Remarks = $remarks;
+			$labdata -> save();
 		} 
 	}//end save
+	
+	public function base_params($data){
+		$data['styles'] = array("jquery-ui.css");
+		$data['scripts'] = array("jquery-ui.js");
+		$data['title'] = "";
+		$this -> load -> view('weeklydata_add_v', $data);
+	}//end base_params
 }//end class

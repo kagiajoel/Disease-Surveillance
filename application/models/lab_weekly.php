@@ -6,6 +6,7 @@ class Lab_Weekly extends Doctrine_Record {
 		$this -> hasColumn('Weekending', 'varchar', 100);
 		$this -> hasColumn('District', 'varchar', 32);
 		$this -> hasColumn('Facility', 'varchar', 11);
+		$this -> hasColumn('Remarks', 'varchar', 50);
 		$this -> hasColumn('Malaria_below_5', 'varchar', 32);
 		$this -> hasColumn('Malaria_above_5', 'varchar', 32);
 		$this -> hasColumn('Positive_below_5', 'varchar', 32);

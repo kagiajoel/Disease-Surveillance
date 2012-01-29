@@ -9,13 +9,24 @@ class Diseases extends Doctrine_Record{
 	}//end setTableDefinition
 	
 	public function setUp(){
-		$this -> hasTableName("diseases");
+		$this -> setTableName("diseases");
 	}//end setUp
 	
 	public function getAll(){
 		$query = Doctrine_Query::create() -> select("*") -> from("Diseases");
 		$diseases = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
 		return $diseases;
+	}
+	public function getAllObjects() {
+		$query = Doctrine_Query::create() -> select("*") -> from("Diseases");
+		$diseases = $query -> execute();
+		return $diseases;
+	}
+
+	public function getName($diseaseId) {
+		$query = Doctrine_Query::create() -> select("name") -> from("diseases") -> where("id ='$diseaseId'");
+		$results = $query -> execute();
+		return $results[0];
 	}
 }
 
