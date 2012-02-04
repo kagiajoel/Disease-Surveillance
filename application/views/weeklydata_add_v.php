@@ -65,7 +65,7 @@ foreach ($diseases as $disease) {
 if($disease -> id != "12"){
 echo '<tr>
 <td>' .$disease-> id . '</td>
-<td>' . $disease -> Name . '</td>';
+<td>' . $disease -> Name . '</td>'
 	?>
 	<td style="background-color: #C4E8B7">
 	<input type="text" name="lmcase[]" id="<?php echo "lmcase_" . $disease -> id;?>" size="10" value=""/>
@@ -99,7 +99,7 @@ echo '<tr>
 	}else{
 	echo '<tr>
 	<td>' .$disease-> id . '</td>
-	<td>' . $disease -> Name . '</td>';
+	<td>' . $disease -> Name . '</td>'
 	?>
 	<td style="background-color: #C4E8B7">
 	<input type="text" name="lmcase[]" id="<?php echo "lmcase_" . $disease -> id;?>" size="10" value=""/>

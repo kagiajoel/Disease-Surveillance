@@ -9,7 +9,7 @@ class Diseases extends Doctrine_Record{
 	}//end setTableDefinition
 	
 	public function setUp(){
-		$this -> setTableName("diseases");
+		$this -> setTableName("Diseases");
 	}//end setUp
 	
 	public function getAll(){

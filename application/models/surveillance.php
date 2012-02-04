@@ -18,7 +18,7 @@ class Surveillance extends Doctrine_Record {
 		$this -> hasColumn('Facility', 'varchar', 15);
 		$this -> hasColumn('Dn', 'varchar', 100);
 		$this -> hasColumn('Ds', 'varchar', 100);
-		$this -> hasColumn('Week_Ending', 'varchar', 20);
+		$this -> hasColumn('Weekending', 'varchar', 20);
 		$this -> hasColumn('Gmcase', 'varchar', 32);
 		$this -> hasColumn('Gfcase', 'varchar', 32);
 		$this -> hasColumn('Gmdeath', 'varchar', 32);
