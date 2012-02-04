@@ -1,3 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo $title;
+?></title>
+<link href="<?php echo base_url().'CSS/style.css'?>" type="text/css" rel="stylesheet"/>
+
+<script type="text/javascript">
+	function zeroReporting(id) {
+		var temp = id.split("_");
+		var disease = temp[1];
+		var lmcase = "lmcase_" + disease;
+		$("#" + lmcase).attr("value", "0");
+		var lfcase = "lfcase_" + disease;
+		$("#" + lfcase).attr("value", "0");
+		var lmdeath = "lmdeath_" + disease;
+		$("#" + lmdeath).attr("value", "0");
+		var lfdeath = "lfdeath_" + disease;
+		$("#" + lfdeath).attr("value", "0");
+		var gmcase = "gmcase_" + disease;
+		$("#" + gmcase).attr("value", "0");
+		var gfcase = "gfcase_" + disease;
+		$("#" + gfcase).attr("value", "0");
+		var gmdeath = "gmdeath_" + disease;
+		$("#" + gmdeath).attr("value", "0");
+		var gfdeath = "gfdeath_" + disease;
+		$("#" + gfdeath).attr("value", "0");
+	}
+</script>
+</head>
 <div class="view_content">
 	<?php
 	$attributes = array('id' => 'entry-form');
@@ -119,40 +150,53 @@ echo '<tr>
 	}//end foreach
 	?>
 </table>
-
 <table>
 	<tr >
-	    <td></td>
-        <th colspan="1">Laboratory Weekly Malaria Confirmation</th>
-        <th colspan="2">&le;5 years</th>
-        <th colspan="7">&ge;5years</th>
-    </tr>
-    <tr >
-    	<td></td>
-        <td colspan="1"><strong> Total Number Tested </strong></td>
-        <td colspan="2" style="background-color: #C4E8B7"><input type="text"  id="totaltestedmalarials" name="totaltestedlessfive" ></td>
-        <td colspan="7" style="background-color: #C4E8B7"><input type="text" name="totaltestedmalariagr" id="totaltestedgreaterfive"></td>
-    </tr>
-    <tr >
-        <td></td>
-        <td colspan="1"><strong> Total Number Positive </strong></td>
-        <td colspan="2" style="background-color: #C4E8B7"><input type="text" id="totalpositivemalarials" name="totalpositivelessfive"></td>
-        <td colspan="7" style="background-color: #C4E8B7"><input type="text" id="totalpositivemalariagr" name="totalpositivegreaterfive"></td>
-    </tr>
-    <tr >
-        <td></td>
-        <td colspan="1"><strong> Remarks </strong></td>
-        <td colspan="9"><textarea name="remarks" rows="2" cols="50"></textarea></td>
-    </tr>
-    <tr>
-    	<td></td>
-    	<td><strong> Reported by </strong></td>
-        <td style="background-color: #C4E8B7"  colspan="4"><input type="text" name="reportedby" id="reportedby"></td>
-        <td colspan="2"><strong> Designation </strong></td>
-        <td style="background-color: #C4E8B7"  colspan="4"><input type="text" name="designation" id="designation"></td>
-    </tr>
-    <tr >
-        <td></td>
-        <td colspan="10"><input name="save" type="submit" class="button" value="Save " /></td>
-    </tr>
+		<td></td>
+		<th colspan="1">Laboratory Weekly Malaria Confirmation</th>
+		<th colspan="2">&le;5 years</th>
+		<th colspan="7">&ge;5years</th>
+	</tr>
+	<tr >
+		<td></td>
+		<td colspan="1"><strong> Total Number Tested </strong></td>
+		<td colspan="2" style="background-color: #C4E8B7">
+		<input type="text"  id="totaltestedmalarials" name="totaltestedlessfive" >
+		</td>
+		<td colspan="7" style="background-color: #C4E8B7">
+		<input type="text" name="totaltestedmalariagr" id="totaltestedgreaterfive">
+		</td>
+	</tr>
+	<tr >
+		<td></td>
+		<td colspan="1"><strong> Total Number Positive </strong></td>
+		<td colspan="2" style="background-color: #C4E8B7">
+		<input type="text" id="totalpositivemalarials" name="totalpositivelessfive">
+		</td>
+		<td colspan="7" style="background-color: #C4E8B7">
+		<input type="text" id="totalpositivemalariagr" name="totalpositivegreaterfive">
+		</td>
+	</tr>
+	<tr >
+		<td></td>
+		<td colspan="1"><strong> Remarks </strong></td>
+		<td colspan="9">		<textarea name="remarks" rows="2" cols="50"></textarea></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><strong> Reported by </strong></td>
+		<td style="background-color: #C4E8B7"  colspan="4">
+		<input type="text" name="reportedby" id="reportedby">
+		</td>
+		<td colspan="2"><strong> Designation </strong></td>
+		<td style="background-color: #C4E8B7"  colspan="4">
+		<input type="text" name="designation" id="designation">
+		</td>
+	</tr>
+	<tr >
+		<td></td>
+		<td colspan="10">
+		<input name="save" type="submit" class="button" value="Save " />
+		</td>
+	</tr>
 </table>
