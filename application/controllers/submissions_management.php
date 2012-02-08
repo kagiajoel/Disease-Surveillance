@@ -1,6 +1,6 @@
 <?php
 
-class Submissions_c extends CI_Controller {
+class Submissions_Management extends CI_Controller {
 	function __construct() {
 		parent::__construct();
 	}
@@ -11,9 +11,9 @@ class Submissions_c extends CI_Controller {
 
 		$provinces = Province::getAll();
 
-		$diseases = Diseases::getAllObjects();
+		$diseases = Disease::getAllObjects();
 
-		$districts = Districts::getAll();
+		$districts = District::getAll();
 
 		$years = Surveillance::getYears();
 
@@ -35,12 +35,12 @@ class Submissions_c extends CI_Controller {
 		$provinceId = $_POST['province'];
 
 		$districtId = $_POST['districts'];
-		$district = Districts::getDistrictNames($districtId);
+		$district = District::getName($districtId);
 		$districtName = $district -> Name;
-		$districts = Districts::getAll();
+		$districts = District::getAll();
 		$provinces = Province::getAll();
 
-		$diseases = Diseases::getAllObjects();
+		$diseases = Disease::getAllObjects();
 
 		$years = Surveillance::getYears();
 
@@ -58,7 +58,7 @@ class Submissions_c extends CI_Controller {
 	function getDistrict() {
 		$segs = $this -> uri -> segment_array();
 		$provinceId = $segs[3];
-		$districts = Districts::getNameAndId($provinceId);
+		$districts = District::getNameAndId($provinceId);
 		$allDistricts = "";
 		foreach ($districts as $districts) {
 			$allDistricts .= $districts -> id;
@@ -70,7 +70,7 @@ class Submissions_c extends CI_Controller {
 	}
 
 	public function getAll($epiweek) {
-		$diseases = Diseases::getAllObjects();
+		$diseases = Disease::getAllObjects();
 		$value = "";
 		foreach ($diseases as $disease) {
 			$sums = Surveillance::getSums($epiweek, $disease -> id);
@@ -109,7 +109,7 @@ class Submissions_c extends CI_Controller {
 		$data['years'] = $years;
 		$data['values'] = $this -> getAllProvinces($epiweek, $diseaseId, $provinces);
 
-		$name = Diseases::getName($diseaseId);
+		$name = Disease::getName($diseaseId);
 		$data['diseaseName'] = $name -> Name;
 		$data['content_view'] = 'submissions_prov_v';
 		$this -> base_params($data);
@@ -142,7 +142,7 @@ class Submissions_c extends CI_Controller {
 	}
 
 	public function getPerDistrict($districtId, $epiweek, $provinceId, $filterdyear) {
-		$diseases = Diseases::getAllObjects();
+		$diseases = Disease::getAllObjects();
 		$value = "";
 		foreach ($diseases as $disease) {
 			$sums = Surveillance::getDistrictSums($districtId, $epiweek, $filterdyear, $disease -> id);
@@ -171,7 +171,7 @@ class Submissions_c extends CI_Controller {
 	public function base_params($data) {
 		$data['title'] = "Submissions";
 		$data['banner_text'] = "Submissions";
-		$data['link'] = "submissions_c";
+		$data['link'] = "submissions_management";
 		$this -> load -> view("template", $data);
 	}
 
