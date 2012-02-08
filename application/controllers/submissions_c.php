@@ -11,9 +11,9 @@ class Submissions_c extends CI_Controller {
 
 		$provinces = Province::getAll();
 
-		$diseases = Disease::getAllObjects();
+		$diseases = Diseases::getAllObjects();
 
-		$districts = District::getAll();
+		$districts = Districts::getAll();
 
 		$years = Surveillance::getYears();
 
@@ -35,12 +35,12 @@ class Submissions_c extends CI_Controller {
 		$provinceId = $_POST['province'];
 
 		$districtId = $_POST['districts'];
-		$district = District::getName($districtId);
+		$district = Districts::getDistrictNames($districtId);
 		$districtName = $district -> Name;
-		$districts = District::getAll();
+		$districts = Districts::getAll();
 		$provinces = Province::getAll();
 
-		$diseases = Disease::getAllObjects();
+		$diseases = Diseases::getAllObjects();
 
 		$years = Surveillance::getYears();
 
@@ -58,7 +58,7 @@ class Submissions_c extends CI_Controller {
 	function getDistrict() {
 		$segs = $this -> uri -> segment_array();
 		$provinceId = $segs[3];
-		$districts = District::getNameAndId($provinceId);
+		$districts = Districts::getNameAndId($provinceId);
 		$allDistricts = "";
 		foreach ($districts as $districts) {
 			$allDistricts .= $districts -> id;
@@ -70,7 +70,7 @@ class Submissions_c extends CI_Controller {
 	}
 
 	public function getAll($epiweek) {
-		$diseases = Disease::getAllObjects();
+		$diseases = Diseases::getAllObjects();
 		$value = "";
 		foreach ($diseases as $disease) {
 			$sums = Surveillance::getSums($epiweek, $disease -> id);
@@ -109,7 +109,7 @@ class Submissions_c extends CI_Controller {
 		$data['years'] = $years;
 		$data['values'] = $this -> getAllProvinces($epiweek, $diseaseId, $provinces);
 
-		$name = Disease::getName($diseaseId);
+		$name = Diseases::getName($diseaseId);
 		$data['diseaseName'] = $name -> Name;
 		$data['content_view'] = 'submissions_prov_v';
 		$this -> base_params($data);
@@ -142,7 +142,7 @@ class Submissions_c extends CI_Controller {
 	}
 
 	public function getPerDistrict($districtId, $epiweek, $provinceId, $filterdyear) {
-		$diseases = Disease::getAllObjects();
+		$diseases = Diseases::getAllObjects();
 		$value = "";
 		foreach ($diseases as $disease) {
 			$sums = Surveillance::getDistrictSums($districtId, $epiweek, $filterdyear, $disease -> id);

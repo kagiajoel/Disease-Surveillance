@@ -6,28 +6,7 @@
 ?></title>
 <link href="<?php echo base_url().'CSS/style.css'?>" type="text/css" rel="stylesheet"/>
 
-<script type="text/javascript">
-	function zeroReporting(id) {
-		var temp = id.split("_");
-		var disease = temp[1];
-		var lmcase = "lmcase_" + disease;
-		$("#" + lmcase).attr("value", "0");
-		var lfcase = "lfcase_" + disease;
-		$("#" + lfcase).attr("value", "0");
-		var lmdeath = "lmdeath_" + disease;
-		$("#" + lmdeath).attr("value", "0");
-		var lfdeath = "lfdeath_" + disease;
-		$("#" + lfdeath).attr("value", "0");
-		var gmcase = "gmcase_" + disease;
-		$("#" + gmcase).attr("value", "0");
-		var gfcase = "gfcase_" + disease;
-		$("#" + gfcase).attr("value", "0");
-		var gmdeath = "gmdeath_" + disease;
-		$("#" + gmdeath).attr("value", "0");
-		var gfdeath = "gfdeath_" + disease;
-		$("#" + gfdeath).attr("value", "0");
-	}
-</script>
+
 </head>
 <div class="view_content">
 	<?php

@@ -43,5 +43,23 @@ class Districts extends Doctrine_Record {
 		return $districtData;
 	}
 
+	public static function getDNRDistricts($year, $epiweek) {
+		$query = Doctrine_Query::create() -> select("d.Name, d.Province") -> from("district d") -> leftJoin("d.Surveillance s on d.id = s.district and reporting_year = '$year' and epiweek = '$epiweek'") -> where("s.district is null");
+		$districts = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
+		return $districts;
+	}
+
+	public function getName($districtId) {
+		$query = Doctrine_Query::create() -> select("Name") -> from("district") -> where(" id = '$districtId'");
+		$results = $query -> execute();
+		return $results[0];
+	}
+
+	public function getNameAndId($provinceId) {
+		$query = Doctrine_Query::create() -> select("*") -> from("district") -> where("Province = '$provinceId'");
+		$results = $query -> execute();
+		return $results;
+	}
+
 }//end class
 ?>
