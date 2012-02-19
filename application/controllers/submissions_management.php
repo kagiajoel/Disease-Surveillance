@@ -11,9 +11,9 @@ class Submissions_Management extends CI_Controller {
 
 		$provinces = Province::getAll();
 
-		$diseases = Disease::getAllObjects();
+		$diseases = Diseases::getAllObjects();
 
-		$districts = District::getAll();
+		$districts = Districts::getAll();
 
 		$years = Surveillance::getYears();
 
@@ -33,15 +33,14 @@ class Submissions_Management extends CI_Controller {
 		$epiweek = $_POST['epiweek'];
 		$filterdyear = $_POST['filteryear'];
 		$provinceId = $_POST['province'];
-
 		$districtId = $_POST['districts'];
-		$district = District::getName($districtId);
+		
+		$district = Districts::getName($districtId);
 		$districtName = $district -> Name;
-		$districts = District::getAll();
+		
+		$districts = Districts::getAll();
 		$provinces = Province::getAll();
-
-		$diseases = Disease::getAllObjects();
-
+		$diseases = Diseases::getAllObjects();
 		$years = Surveillance::getYears();
 
 		$data['selected_epiweek'] = $epiweek;
@@ -50,6 +49,8 @@ class Submissions_Management extends CI_Controller {
 		$data['years'] = $years;
 		$data['diseases'] = $diseases;
 		$data['districtName'] = $districtName;
+		
+		//missing value
 		$data['values'] = $this -> getPerDistrict($districtId, $epiweek, $provinceId, $filterdyear);
 		$data['content_view'] = 'submissions_distr_v';
 		$this -> base_params($data);
@@ -58,7 +59,7 @@ class Submissions_Management extends CI_Controller {
 	function getDistrict() {
 		$segs = $this -> uri -> segment_array();
 		$provinceId = $segs[3];
-		$districts = District::getNameAndId($provinceId);
+		$districts = Districts::getNameAndId($provinceId);
 		$allDistricts = "";
 		foreach ($districts as $districts) {
 			$allDistricts .= $districts -> id;
@@ -70,7 +71,7 @@ class Submissions_Management extends CI_Controller {
 	}
 
 	public function getAll($epiweek) {
-		$diseases = Disease::getAllObjects();
+		$diseases = Diseases::getAllObjects();
 		$value = "";
 		foreach ($diseases as $disease) {
 			$sums = Surveillance::getSums($epiweek, $disease -> id);
@@ -142,7 +143,7 @@ class Submissions_Management extends CI_Controller {
 	}
 
 	public function getPerDistrict($districtId, $epiweek, $provinceId, $filterdyear) {
-		$diseases = Disease::getAllObjects();
+		$diseases = Diseases::getAllObjects();
 		$value = "";
 		foreach ($diseases as $disease) {
 			$sums = Surveillance::getDistrictSums($districtId, $epiweek, $filterdyear, $disease -> id);

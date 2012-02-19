@@ -11,8 +11,8 @@ class Weekly_Data_Management extends MY_Controller {
 
 	public function add() {
 		$provinces = Province::getAll();
-		$districts = District::getAll();
-		$diseases = Disease::getAllObjects();
+		$districts = Districts::getAll();
+		$diseases = Diseases::getAllObjects();
 
 		$data['provinces'] = $provinces;
 		$data['districts'] = $districts;
@@ -20,6 +20,10 @@ class Weekly_Data_Management extends MY_Controller {
 		$data['scripts'] = array("special_date_picker.js");
 		$this -> base_params($data);
 	}//end add
+	
+	public function edit($id = NULL){
+			
+	}//end edit
 
 	public function save() {
 		$i = 0;
@@ -27,7 +31,7 @@ class Weekly_Data_Management extends MY_Controller {
 		if ($valid == false) {
 			$this -> add();
 		} else {
-			$diseases = Disease::getAllObjects();
+			$diseases = Diseases::getAllObjects();
 
 			$weekending = $this -> input -> post("week_ending");
 			$reporting_year = $this -> input -> post("reporting_year");
