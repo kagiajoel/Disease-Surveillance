@@ -51,7 +51,7 @@ $this->load->helper('form');
 		<div class="section-title" align="center"><strong>SUBMISSIONS LIST  FOR EPIWEEK <?php echo $selected_epiweek;?></strong></div>
 </div>
 <div align="center">
-	<?php echo form_open('Submissions_c/filter'); ?>
+	<?php echo form_open('submissions_management/filter'); ?>
 		<table>
 			<tr>
 				<td> Province 
@@ -166,7 +166,7 @@ $this->load->helper('form');
 			echo "<td>" . ($values[$disease->id][10] + $values[$disease->id][14]) . "</td>";
 			echo "<td>" . ($values[$disease->id][11] + $values[$disease->id][15]) . "</td>";
 
-			echo "<td>"; echo anchor('Submissions_c/provincialDetails'."/".$selected_epiweek."/".$disease->id,'Breakdown',array("class"=>"link")); echo "</td>";
+			echo "<td>"; echo anchor('submissions_management/provincialDetails'."/".$selected_epiweek."/".$disease->id,'Breakdown',array("class"=>"link")); echo "</td>";
 			echo "</tr>";
 		}//end of while
 

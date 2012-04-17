@@ -65,66 +65,59 @@ class Surveillance extends Doctrine_Record {
 		return $surveillance[0];
 	}
 
-	public function getLastEpiweek($currentyear){
-		$query = Doctrine_Query::create() -> select("MAX(Epiweek) AS epiweek") -> from("surveillance")->where("Reporting_Year='$currentyear'");
+	public function getLastEpiweek($currentyear) {
+		$query = Doctrine_Query::create() -> select("MAX(Epiweek) AS epiweek") -> from("surveillance") -> where("Reporting_Year='$currentyear'");
 		$result = $query -> execute();
 		return $result[0];
 	}
-	public function getYears(){
-		$query = Doctrine_Query::create() -> select("DISTINCT Reporting_Year as filteryear") -> from("surveillance")->orderBy("Reporting_Year DESC");
+
+	public function getEpiweek() {
+		$query = Doctrine_Query::create() -> select("DISTINCT Epiweek as epiweek") -> from("surveillance") -> orderBy("ABS (epiweek) ASC");
 		$result = $query -> execute();
 		return $result;
 	}
-	public function getSums($epiweek,$diseaseId){
-		$query = Doctrine_Query::create()
-		-> select("SUM( Lmcase ) AS lmcase, SUM( Lfcase ) AS lfcase, SUM( Lmdeath ) AS lmdeath, SUM( Lfdeath ) AS lfdeath, SUM( Gmcase ) AS gmcase, SUM( Gfcase ) AS gfcase, SUM( Gmdeath ) AS gmdeath, SUM( Gfdeath ) AS gfdeath") 
-		-> from("surveillance")
-		-> where("Epiweek = '$epiweek' and Disease='$diseaseId'");
-		$result = $query -> execute();
-		return $result[0];
-	}
-	public function getCumulative($epiweek,$diseaseId,$currentYear){
-		$query = Doctrine_Query::create()
-		-> select("SUM( Lmcase ) AS lmcase, SUM( Lfcase ) AS lfcase, SUM( Lmdeath ) AS lmdeath, SUM( Lfdeath ) AS lfdeath, SUM( Gmcase ) AS gmcase, SUM( Gfcase ) AS gfcase, SUM( Gmdeath ) AS gmdeath, SUM( Gfdeath ) AS gfdeath") 
-		-> from("surveillance")
-		-> where("Epiweek BETWEEN 1 AND '$epiweek' AND Disease='$diseaseId' and Reporting_Year='$currentYear'");
-		$result = $query -> execute();
-		return $result[0];
-	}
-	public function getProvincialSums($epiweek,$diseaseId,$provinceId){
-		$query = Doctrine_Query::create()
-		-> select("SUM( Lmcase ) AS lmcase, SUM( Lfcase ) AS lfcase, SUM( Lmdeath ) AS lmdeath, SUM( Lfdeath ) AS lfdeath, SUM( Gmcase ) AS gmcase, SUM( Gfcase ) AS gfcase, SUM( Gmdeath ) AS gmdeath, SUM( Gfdeath ) AS gfdeath") 
-		-> from("surveillance,districts")
-		-> where("Epiweek = '$epiweek' AND Disease='$diseaseId' AND surveillance.District = districts.id AND districts.Province = '$provinceId' ");
-		$result = $query -> execute();
-		return $result[0];
-	}
-	public function getProvincialCumulative($epiweek,$diseaseId,$provinceId,$currentYear){
-		$query = Doctrine_Query::create()
-		-> select("SUM( Lmcase ) AS lmcase, SUM( Lfcase ) AS lfcase, SUM( Lmdeath ) AS lmdeath, SUM( Lfdeath ) AS lfdeath, SUM( Gmcase ) AS gmcase, SUM( Gfcase ) AS gfcase, SUM( Gmdeath ) AS gmdeath, SUM( Gfdeath ) AS gfdeath") 
-		-> from("surveillance,districts")
-		-> where("Epiweek BETWEEN 1 AND '$epiweek' AND Reporting_Year='$currentYear' AND districts.Province = '$provinceId' AND surveillance.District = districts.id AND Disease='$diseaseId'");
-		$result = $query -> execute();
-		return $result[0];
-	}
-	public function getDistrictSums($districtId,$epiweek,$selectedYear,$diseaseId){
-		$query = Doctrine_Query::create()
-		-> select("SUM(lmcase) AS lmcase,SUM(Lfcase) AS lfcase,SUM(Lmdeath) AS lmdeath,SUM(Lfdeath) AS lfdeath,SUM(Gmcase) AS gmcase,SUM(Gfcase) AS gfcase,SUM(Gmdeath) AS gmdeath,SUM(Gfdeath) AS gfdeath") 
-		-> from("surveillance")
-		-> where("District = '$districtId' AND surveillance.Disease = '$diseaseId' AND Epiweek='$epiweek' AND Reporting_Year = '$selectedYear'");
-		$result = $query -> execute();
-		return $result[0];
-	}
-	public function getDistrictCumulative($districtId,$epiweek,$provinceId,$diseaseId,$selectedYear){
-		$query = Doctrine_Query::create()
-		-> select("SUM(Lmcase) AS lmcase,SUM(Lfcase) AS lfcase,SUM(Lmdeath) AS lmdeath,SUM(Lfdeath) AS lfdeath,SUM(Gmcase) AS gmcase,SUM(Gfcase) AS gfcase,SUM(Gmdeath) AS gmdeath,SUM(Gfdeath) AS gfdeath") 
-		-> from("surveillance,districts")
-		-> where("District = '$districtId' AND districts.Province = '$provinceId' AND surveillance.Disease = '$diseaseId' AND Epiweek between 1 and '$epiweek' AND Reporting_Year = '$selectedYear'");
 
+	public function getYears() {
+		$query = Doctrine_Query::create() -> select("DISTINCT Reporting_Year as filteryear") -> from("surveillance") -> orderBy("Reporting_Year DESC");
+		$result = $query -> execute();
+		return $result;
+	}
+
+	public function getSums($epiweek, $diseaseId) {
+		$query = Doctrine_Query::create() -> select("SUM( Lmcase ) AS lmcase, SUM( Lfcase ) AS lfcase, SUM( Lmdeath ) AS lmdeath, SUM( Lfdeath ) AS lfdeath, SUM( Gmcase ) AS gmcase, SUM( Gfcase ) AS gfcase, SUM( Gmdeath ) AS gmdeath, SUM( Gfdeath ) AS gfdeath") -> from("surveillance") -> where("Epiweek = '$epiweek' and Disease='$diseaseId'");
 		$result = $query -> execute();
 		return $result[0];
 	}
 
+	public function getCumulative($epiweek, $diseaseId, $currentYear) {
+		$query = Doctrine_Query::create() -> select("SUM( Lmcase ) AS lmcase, SUM( Lfcase ) AS lfcase, SUM( Lmdeath ) AS lmdeath, SUM( Lfdeath ) AS lfdeath, SUM( Gmcase ) AS gmcase, SUM( Gfcase ) AS gfcase, SUM( Gmdeath ) AS gmdeath, SUM( Gfdeath ) AS gfdeath") -> from("surveillance") -> where("Epiweek BETWEEN 1 AND '$epiweek' AND Disease='$diseaseId' and Reporting_Year='$currentYear'");
+		$result = $query -> execute();
+		return $result[0];
+	}
 
+	public function getProvincialSums($epiweek, $diseaseId, $provinceId) {
+		$query = Doctrine_Query::create() -> select("SUM( Lmcase ) AS lmcase, SUM( Lfcase ) AS lfcase, SUM( Lmdeath ) AS lmdeath, SUM( Lfdeath ) AS lfdeath, SUM( Gmcase ) AS gmcase, SUM( Gfcase ) AS gfcase, SUM( Gmdeath ) AS gmdeath, SUM( Gfdeath ) AS gfdeath") -> from("surveillance,districts") -> where("Epiweek = '$epiweek' AND Disease='$diseaseId' AND surveillance.District = districts.id AND districts.Province = '$provinceId' ");
+		$result = $query -> execute();
+		return $result[0];
+	}
+
+	public function getProvincialCumulative($epiweek, $diseaseId, $provinceId, $currentYear) {
+		$query = Doctrine_Query::create() -> select("SUM( Lmcase ) AS lmcase, SUM( Lfcase ) AS lfcase, SUM( Lmdeath ) AS lmdeath, SUM( Lfdeath ) AS lfdeath, SUM( Gmcase ) AS gmcase, SUM( Gfcase ) AS gfcase, SUM( Gmdeath ) AS gmdeath, SUM( Gfdeath ) AS gfdeath") -> from("surveillance,districts") -> where("Epiweek BETWEEN 1 AND '$epiweek' AND Reporting_Year='$currentYear' AND districts.Province = '$provinceId' AND surveillance.District = districts.id AND Disease='$diseaseId'");
+		$result = $query -> execute();
+		return $result[0];
+	}
+
+	public function getDistrictSums($districtId, $epiweek, $selectedYear, $diseaseId) {
+		$query = Doctrine_Query::create() -> select("SUM(lmcase) AS lmcase,SUM(Lfcase) AS lfcase,SUM(Lmdeath) AS lmdeath,SUM(Lfdeath) AS lfdeath,SUM(Gmcase) AS gmcase,SUM(Gfcase) AS gfcase,SUM(Gmdeath) AS gmdeath,SUM(Gfdeath) AS gfdeath") -> from("surveillance") -> where("District = '$districtId' AND surveillance.Disease = '$diseaseId' AND Epiweek='$epiweek' AND Reporting_Year = '$selectedYear'");
+		$result = $query -> execute();
+		return $result[0];
+	}
+
+	public function getDistrictCumulative($districtId, $epiweek, $provinceId, $diseaseId, $selectedYear) {
+		$query = Doctrine_Query::create() -> select("SUM(Lmcase) AS lmcase,SUM(Lfcase) AS lfcase,SUM(Lmdeath) AS lmdeath,SUM(Lfdeath) AS lfdeath,SUM(Gmcase) AS gmcase,SUM(Gfcase) AS gfcase,SUM(Gmdeath) AS gmdeath,SUM(Gfdeath) AS gfdeath") -> from("surveillance,districts") -> where("District = '$districtId' AND districts.Province = '$provinceId' AND surveillance.Disease = '$diseaseId' AND Epiweek between 1 and '$epiweek' AND Reporting_Year = '$selectedYear'");
+
+		$result = $query -> execute();
+		return $result[0];
+	}
 
 }

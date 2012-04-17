@@ -110,7 +110,7 @@ class Submissions_Management extends CI_Controller {
 		$data['years'] = $years;
 		$data['values'] = $this -> getAllProvinces($epiweek, $diseaseId, $provinces);
 
-		$name = Disease::getName($diseaseId);
+		$name = Diseases::getName($diseaseId);
 		$data['diseaseName'] = $name -> Name;
 		$data['content_view'] = 'submissions_prov_v';
 		$this -> base_params($data);
