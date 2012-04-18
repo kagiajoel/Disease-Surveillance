@@ -15,7 +15,7 @@ class DNR_Districts extends MY_Controller {
 		$data['report_view'] = "dnr_districts_v";
 		$this -> base_params($data);
 	}
-
+	
 	public function view_list(){ 
 		$year = $this->input->post("year");
 		$epiweek = $this->input->post("epiweek");
@@ -34,7 +34,7 @@ class DNR_Districts extends MY_Controller {
 		$data['scripts'] = array("jquery-ui.js");
 		$data['quick_link'] = "dnr_districts";
 		$data['title'] = "System Reports";
-
+		
 		$data['content_view'] = "reports_v";
 		$data['banner_text'] = "'DNR' Districts";
 		$data['link'] = "reports_management";

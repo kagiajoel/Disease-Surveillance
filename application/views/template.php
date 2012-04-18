@@ -59,7 +59,38 @@ if (isset($styles)) {
 	}
 }
 ?>  
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#my_profile_link_container").hover(function() {
+			var html = "<a href='<?php echo base_url().'user_management/change_password'?>' class='top_menu_link temp_link'>Change Password</a> <a href='<?php echo base_url().'user_management/logout'?>' class='top_menu_link temp_link'>Logout</a> ";
+			$("#my_profile_link").css('display','none'); 
+			$(this).append(html);
+		}, function() {
+			$("#my_profile_link").css('display','block');
+			$(this).find(".temp_link").remove();
+		});
+	});
 
+</script>
+<style>
+	#my_profile_link_container .generated_link{
+		display: none;
+	}
+	#my_profile_link{ 
+		min-width: 200px !important;
+	}
+	#my_profile_link_continer{
+		min-width: 200px !important;
+		background-color: red;
+		height:100px;
+	}
+	.temp_link{
+		font-size: 10px;
+		width:100px !important;
+		background-color: #B80000;  
+		margin:0px;
+	}
+</style>
 </head>
 
 <body>
@@ -80,7 +111,7 @@ if (isset($styles)) {
 
  	<?php
 	//Code to loop through all the menus available to this user!
-	//Fet the current domain
+	//Fetch the current domain
 	$menus = $this -> session -> userdata('menu_items');
 	$current = $this -> router -> class;
 	$counter = 0;
@@ -91,7 +122,7 @@ if (isset($styles)) {
 ?>">Home </a>
 <?php
 foreach($menus as $menu){?>
-	<a href = "<?php echo base_url() . $menu['url'];?>" class="top_menu_link <?php
+	<a href = "<?php echo base_url() . $menu['url'];?>" class="generated_link top_menu_link <?php
 	if ($current == $menu['url'] || $menu['url'] == $link) {echo " top_menu_active ";
 	}
 ?>"><?php echo $menu['text'];?>
@@ -99,25 +130,30 @@ foreach($menus as $menu){?>
 $counter++;
 }
 	?>
+	
+<div id="my_profile_link_container" style="display: inline">
+<a ref="#" class="top_menu_link" id="my_profile_link" user_id = "<?php echo $this -> session -> userdata('user_id');?>" display_text = "<?php echo $this -> session -> userdata('full_name');?>"><?php echo $this -> session -> userdata('full_name');?></a>	
+</div>
 
-<a ref="#" class="top_menu_link" id="my_profile_link"><?php echo $this -> session -> userdata('full_name');?></a>
 
  </div>
 
 </div>
 
 <div id="inner_wrapper"> 
+	<?php if(!$user_is_administrator){?>
 <div id="sub_menu">
 	<a style="width:200px !important" href="<?php echo site_url('weekly_data_management');?>" class="top_menu_link sub_menu_link first_link  <?php
 	if ($quick_link == "weekly_data_management") {echo "top_menu_active";
 	}
 	?>">Add Epidemiological Data</a>
-		<a style="width:200px !important" href="<?php echo site_url('weekly_data_management');?>" class="top_menu_link sub_menu_link last_link  <?php
+		<a style="width:250px !important" href="offline_add_weekly_data.html" class="top_menu_link sub_menu_link">Add Epidemiological Data (Offline)</a>
+		<a style="width:200px !important" href="<?php echo site_url('zoonotic_data_management');?>" class="top_menu_link sub_menu_link last_link  <?php
 		if ($quick_link == "zoonotic_data_management") {echo "top_menu_active";
 		}
 	?>">Add Zoonotic Data</a>
 </div>
-
+<?php }?>
 <div id="main_wrapper"> 
  
 <?php $this -> load -> view($content_view);?>

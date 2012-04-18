@@ -1,7 +1,3 @@
-
-82
-83
-84
 <?php
 class Data_Duplication extends MY_Controller {
 

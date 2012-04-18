@@ -6,19 +6,19 @@ class Users extends Doctrine_Record {
 		$this -> hasColumn('Username', 'varchar', 12);
 		$this -> hasColumn('Password', 'varchar', 32);
 		$this -> hasColumn('Access_Level', 'varchar', 1);
-		$this -> hasColumn('Flag', 'varchar', 10);
-		$this -> hasColumn('Telephone', 'varchar', 50);
-		$this -> hasColumn('Postal', 'varchar', 50);
-		$this -> hasColumn('Email', 'varchar', 50);
-		$this -> hasColumn('Added_By', 'varchar', 5);
+		$this -> hasColumn('Disabled', 'varchar', 5);
 		$this -> hasColumn('District_Or_Province', 'varchar', 50);
 		$this -> hasColumn('Timestamp', 'varchar', 32);
+		$this -> hasColumn('Can_Delete', 'varchar', 5);
+		$this -> hasColumn('Can_Download_Raw_Data', 'varchar', 5);
 	}
 
 	public function setUp() {
 		$this -> setTableName('users');
 		$this -> hasMutator('Password', '_encrypt_password');
 		$this -> hasOne('Access_Level as Access', array('local' => 'Access_Level', 'foreign' => 'id'));
+		$this -> hasOne('District as District_Object', array('local' => 'District_Or_Province', 'foreign' => 'id'));
+		$this -> hasOne('Province as Province_Object', array('local' => 'District_Or_Province', 'foreign' => 'id'));
 		$this -> hasOne('Users as Creator', array('local' => 'Added_By', 'foreign' => 'id'));
 	}
 
@@ -66,5 +66,34 @@ class Users extends Doctrine_Record {
 		$users = $query -> execute(array(), Doctrine::HYDRATE_ARRAY);
 		return $users;
 	}
+
+	public static function getTotalNumber() {
+		$query = Doctrine_Query::create() -> select("COUNT(*) as Total_Users") -> from("Users");
+		$count = $query -> execute();
+		return $count[0] -> Total_Users;
+	}
+
+	public function getPagedUsers($offset, $items) {
+		$query = Doctrine_Query::create() -> select("*") -> from("Users") -> orderBy("id desc") -> offset($offset) -> limit($items);
+		$users = $query -> execute();
+		return $users;
+	}
+
+	public static function getUser($id) {
+		$query = Doctrine_Query::create() -> select("*") -> from("Users") -> where("id = '$id'");
+		$user = $query -> execute();
+		return $user[0];
+	}
+
+	public static function userExists($username) {
+		if ($u = Doctrine::getTable('Users') -> findOneByUsername($username)) {
+
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+ 
 
 }

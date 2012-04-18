@@ -27,17 +27,15 @@ class Home_Controller extends MY_Controller {
 		$this -> session -> set_userdata($menu_data);
 		$this -> session -> set_userdata($menus);
 
-		$epiweek = $_POST['epiweek'];
-		$province = $_POST['province'];
-		$year = $_POST['year'];
-
 		$provinces = Province::getAll();
 		$epiweeks = Surveillance::getEpiweek();
 		$years = Surveillance::getYears();
+		$diseases = Diseases::getAllObjects();
 
 		$data['epiweeks'] = $epiweeks;
 		$data['provinces'] = $provinces;
 		$data['years'] = $years;
+		$data['diseases'] = $diseases;
 		$data['scripts'] = array("FusionCharts/FusionCharts.js");
 		$data['title'] = "System Home";
 		$data['content_view'] = "home_v";
@@ -49,13 +47,14 @@ class Home_Controller extends MY_Controller {
 
 	function graph() {
 		$counties = Province::getAll();
+		$epiweeks = Surveillance::getEpiweek();
 		$num = 0;
-		$strXML = "<chart palette='2' caption='County Comparison' shownames='1' showvalues='0' numberPrefix='\$' useRoundEdges='1' legendBorderAlpha='0'>
+		$strXML = "<chart palette='2' showBorder='0' labelStep='5' caption='Disease Trends' shownames='1' showvalues='0' useRoundEdges='1' legendBorderAlpha='0' xAxisName='Epiweek' yAxisName='Deaths and Cases'>
                <categories>";
-		foreach ($counties as $counties) {
+		foreach ($epiweeks as $epiweek) {
 			$num++;
-			$county = $counties -> Name;
-			$strXML .= "<category label='$county'/>";
+			$epi = $epiweek -> epiweek;
+			$strXML .= "<category label='$epi'/>";
 		}
 		$strXML .= "</categories>
                <dataset seriesName='Consumed' color='AFD8F8' showValues='0'>";
@@ -70,6 +69,33 @@ class Home_Controller extends MY_Controller {
 		$strXML .= "</dataset>        
                </chart>";
 		echo $strXML; 
+	}
+
+	function filter() {
+		$epiweek = $_POST['epiweek'];
+		$filterdyear = $_POST['filteryear'];
+		$provinceId = $_POST['province'];
+		$districtId = $_POST['districts'];
+		
+		$district = District::getName($districtId);
+		$districtName = $district -> Name;
+		
+		$districts = District::getAll();
+		$provinces = Province::getAll();
+		$diseases = Diseases::getAllObjects();
+		$years = Surveillance::getYears();
+
+		$data['selected_epiweek'] = $epiweek;
+		$data['provinces'] = $provinces;
+		$data['districts'] = $districts;
+		$data['years'] = $years;
+		$data['diseases'] = $diseases;
+		$data['districtName'] = $districtName;
+		
+		//missing value
+		$data['values'] = $this -> getPerDistrict($districtId, $epiweek, $provinceId, $filterdyear);
+		$data['content_view'] = 'submissions_distr_v';
+		$this -> base_params($data);
 	}
 
 }

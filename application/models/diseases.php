@@ -24,7 +24,7 @@ class Diseases extends Doctrine_Record{
 	}
 
 	public function getName($diseaseId) {
-		$query = Doctrine_Query::create() -> select("name") -> from("diseases") -> where("id ='$diseaseId'");
+		$query = Doctrine_Query::create() -> select("name") -> from("Diseases") -> where("id ='$diseaseId'");
 		$results = $query -> execute();
 		return $results[0];
 	}

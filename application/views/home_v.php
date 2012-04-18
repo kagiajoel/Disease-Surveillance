@@ -4,14 +4,14 @@ $this -> load -> helper('form');
 ?>
 <script type="text/javascript">
 	$(function(){
-var chart = new FusionCharts('<?php echo base_url().'Scripts/FusionCharts/Charts/ScrollColumn2d.swf'?>', "ChartId", "500", "350", "0", "0");
+var chart = new FusionCharts('<?php echo base_url().'Scripts/FusionCharts/Charts/MSLine.swf'?>', "ChartId", "700", "350", "0", "0");
 	chart.setDataURL('<?php echo base_url().'home_controller/graph'?>');
 	chart.render("consumption");
 	});
 
 </script>
 <div align="center">
-	<?php echo form_open('home_controller/home');?>
+	<?php echo form_open('home_controller/filter');?>
 	<table>
 		<tr>
 			<td> Province
@@ -41,6 +41,16 @@ var chart = new FusionCharts('<?php echo base_url().'Scripts/FusionCharts/Charts
 				}
 				?>
 			</select></td>
+			<td> Disease
+			<select name="disease" id="disease">
+				<option value="0" selected>--Select Disease--</option>
+				<?php
+				foreach ($diseases as $disease) {
+					echo "<option selected value='$disease->id'>$disease->Name</option>";
+				}
+				?>
+			</select></td>
+			<td><input name="filter" type="submit" class="button" value="Filter"/></td>
 		</tr>
 	</table>
 	<?php echo form_close();?>

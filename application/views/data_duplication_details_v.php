@@ -51,9 +51,7 @@ foreach ($surveillance_sets as $set) {
 		width: 800px;
 		margin: 5px auto;
 		padding: 5px;
-	}
-
-
+	}
 </style>
 <div  class="section" align="center">
 	<table class="data-table" style="margin: 10px auto;">

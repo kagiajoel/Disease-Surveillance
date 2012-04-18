@@ -1,5 +1,6 @@
 <?php
 class District_Reports extends MY_Controller {
+
 	//required
 	function __construct() {
 		parent::__construct();

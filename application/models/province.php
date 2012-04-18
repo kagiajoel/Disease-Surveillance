@@ -10,16 +10,16 @@ class Province extends Doctrine_Record {
 	}//end setUp
 
 	public function getAll() {
-		$query = Doctrine_Query::create() -> select("ID, name") -> from("province");
+		$query = Doctrine_Query::create() -> select("*") -> from("Province");
 		$provinceData = $query -> execute();
 		return $provinceData;
 	}//end getAll
-	
-	public function getProvinceNames() {
-		$queryProvinces = Doctrine_Query::create() -> select("name") -> from("province");
-		$provinceNames = $queryProvinces -> execute();
-		return $provinceNames;
-	}//end getProvinceNames
+
+	public function getProvince($id) {
+		$query = Doctrine_Query::create() -> select("*") -> from("Province")->where("id = '$id'");
+		$provinceData = $query -> execute();
+		return $provinceData;
+	}
 
 }//end class
 ?>

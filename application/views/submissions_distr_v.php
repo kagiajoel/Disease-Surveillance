@@ -161,7 +161,7 @@ $this->load->helper('form');
 			echo "<td>"; echo anchor('Submissions_c/provincialDetails'."/".$selected_epiweek."/".$disease->id,'Breakdown',array("class"=>"link")); echo "</td>";
 			echo "</tr>";
 		}//end of while
-
+		
 		?>
 		</tr>
 	</table>

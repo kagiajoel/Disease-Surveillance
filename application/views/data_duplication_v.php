@@ -33,8 +33,7 @@ $earliest_year = $current_year - 5;
 	.filter_input {
 		border: 1px solid black;
 	}
-
-
+
 </style>
 <div id="filter">
 	<?php
