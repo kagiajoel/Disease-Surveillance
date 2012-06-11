@@ -28,11 +28,11 @@ class Lab_Weekly extends Doctrine_Record {
 	}//end getLabData
 
 	public static function getRawData($year, $start_week, $end_week) {
-<<<<<<< HEAD
+
 		$query = Doctrine_Query::create() -> select("*") -> from("lab_weekly") -> where("Reporting_Year = '$year' and epiweek between '$start_week' and '$end_week'");
-=======
+
 		$query = Doctrine_Query::create() -> select("*") -> from("lab_weekly") -> where("Reporting_Year = '$year' and abs(epiweek) between '$start_week' and '$end_week'")->orderBy("abs(epiweek)");
->>>>>>> 0660fa74c7ed283e265533d3b72412a63f14c082
+
 		$lab_data = $query -> execute();
 		return $lab_data;
 	}
@@ -78,7 +78,7 @@ class Lab_Weekly extends Doctrine_Record {
 		$lab_weekly = $query -> execute();
 		return $lab_weekly;
 	}
-<<<<<<< HEAD
+
 	
 	public function getPositivity($year,$province,$epiweek) {
 		$query = Doctrine_Query::create() -> select("SUM(Positive_Above_5) as Above,SUM(Positive_Below_5) as Below") -> from("lab_weekly,district,province")-> where("reporting_year = '$year' AND district.id = lab_weekly.District AND district.province = '$province' and epiweek = '$epiweek'");		
@@ -86,8 +86,6 @@ class Lab_Weekly extends Doctrine_Record {
 		echo $query -> getSQL();
 		return $result[0];
 	}
-=======
->>>>>>> 0660fa74c7ed283e265533d3b72412a63f14c082
 
 }
 ?>

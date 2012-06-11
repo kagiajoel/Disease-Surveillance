@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL^E_NOTICE);
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
