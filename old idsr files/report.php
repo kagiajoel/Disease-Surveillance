@@ -415,12 +415,7 @@ img {border: none;}
 		<ul class="menu">
 			<li id="news" class="active">2010 Bulletins</li>
           <li id="tutorials" class="active">2011 Bulletins</li>
-			<li id="tutorials">M&E</li>
-			<li id="links">EPR</li>
-            <li id="links">VPD</li>
-            <li id="links">Influenza</li>
-            <li id="links">IDS</li>
-            <li id="links">Administration</li>
+ <li id="tutorials" class="active">2012 Bulletins</li>
 		</ul>
 		<span class="clear"></span>
 		<div class="content news">
@@ -516,6 +511,48 @@ $i++;
 
 	echo "</table>";
 ?>
+
+
+<!--new-->
+<div class="content news">
+			<p>Kenya Weekly Epidemiological Bulletins for 2012</p>
+			<ul>
+				<?php
+echo "<table width='100%' align='center'>";
+for($i=1;$i<=15;$i++)
+{
+if($i % 2 == 0)
+		{
+			echo "<tr>";
+			echo "<td style='background-color:#fff'>";
+			
+			echo "Bulletin for Epiweek ".$i;
+			echo "<a style='text-decoration : none;' href='Bulletins/2010/" .$i. ".pdf'>&nbsp;<img src='images/down.png' alt='Download' /></a>"; 
+			echo "</td>";
+			echo "<td style='background-color:#fff'>";
+			echo "Bulletin for Epiweek ".($i+16);
+			echo "<a style='text-decoration : none;' href='Bulletins/2010/".($i+16). ".pdf'>&nbsp;<img src='images/down.png' alt='Download' /></a>"; 
+			echo "</td>";
+			echo "</tr>";
+		}
+		else
+		{
+			echo "<tr>";
+			echo "<td style='background-color:#eee'>";
+			echo "Bulletin for Epiweek ".$i;
+			echo "<a style='text-decoration : none;' href='Bulletins/2010/" .$i. ".pdf'>&nbsp;<img src='images/down.png' alt='Download' /></a>"; 
+			echo "</td>";
+			echo "<td style='background-color:#eee'>";
+			echo "Bulletin for Epiweek ".($i+16);
+			echo "<a style='text-decoration : none;' href='Bulletins/2010/".($i+16). ".pdf'>&nbsp;<img src='images/down.png' alt='Download' /></a>"; 
+			echo "</td>";
+			echo "</tr>";
+		}
+	}
+	echo "</table>";
+?>
+			<ul>
+		</div>
 			<ul>
 		</div>
 		<div class="content links">
