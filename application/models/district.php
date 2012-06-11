@@ -6,9 +6,9 @@ class District extends Doctrine_Record {
 		$this -> hasColumn('Province', 'int', 14);
 		$this -> hasColumn('Comment', 'varchar', 32);
 		$this -> hasColumn('Flag', 'int', 32);
-		$this -> hasColumn('Latitude', 'varchar', 100);
-		$this -> hasColumn('Longitude', 'varchar', 100);
-		$this -> hasColumn('Disabled', 'varchar', 1);
+		//$this -> hasColumn('Latitude', 'varchar', 100);
+		//$this -> hasColumn('Longitude', 'varchar', 100);
+		//$this -> hasColumn('Disabled', 'varchar', 1);
 	}//end setTableDefinition
 
 	public function setUp() {

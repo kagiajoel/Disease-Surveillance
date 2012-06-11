@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 class Submissions_Management extends CI_Controller {
 	function __construct() {
 		parent::__construct();

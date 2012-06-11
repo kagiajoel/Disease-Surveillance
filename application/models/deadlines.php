@@ -15,5 +15,11 @@ class Deadlines extends Doctrine_Record{
 		$deadline = $query -> execute();
 		return $deadline;
 	}
+	
+	public function tableLateReports(){
+		$query = Doctrine_Query::create() -> select("Deadline,Date_Reported,Epiweek") -> from("Deadlines,Surveillance") -> where ("Surveillance.Reporting_Year = '$year' and Deadlines.Epiweek = Surveillance.Epiweek");
+		$deadline = $query -> execute();
+		return $deadline;
+	}
 		
 }//end class

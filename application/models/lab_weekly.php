@@ -74,6 +74,13 @@ class Lab_Weekly extends Doctrine_Record {
 		$lab_weekly = $query -> execute();
 		return $lab_weekly;
 	}
+	
+	public function getPositivity($year,$province,$epiweek) {
+		$query = Doctrine_Query::create() -> select("SUM(Positive_Above_5) as Above,SUM(Positive_Below_5) as Below") -> from("lab_weekly,district,province")-> where("reporting_year = '$year' AND district.id = lab_weekly.District AND district.province = '$province' and epiweek = '$epiweek'");		
+		$result = $query -> execute();
+		echo $query -> getSQL();
+		return $result[0];
+	}
 
 }
 ?>
