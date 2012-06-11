@@ -11,7 +11,11 @@ class Users extends Doctrine_Record {
 		$this -> hasColumn('Timestamp', 'varchar', 32);
 		$this -> hasColumn('Can_Delete', 'varchar', 5);
 		$this -> hasColumn('Can_Download_Raw_Data', 'varchar', 5);
+<<<<<<< HEAD
 	}	
+=======
+	}
+>>>>>>> 0660fa74c7ed283e265533d3b72412a63f14c082
 
 	public function setUp() {
 		$this -> setTableName('users');

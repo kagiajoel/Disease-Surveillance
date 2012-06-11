@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
 error_reporting(0);
+=======
+
+>>>>>>> 0660fa74c7ed283e265533d3b72412a63f14c082
 class Submissions_Management extends CI_Controller {
 	function __construct() {
 		parent::__construct();

@@ -1746,4 +1746,8 @@
 	// Add another global to avoid noConflict issues with inline event handlers
 	window['DP_jQuery_' + dpuuid] = $;
 
+<<<<<<< HEAD
 })(jQuery);
+=======
+})(jQuery);
+>>>>>>> 0660fa74c7ed283e265533d3b72412a63f14c082

@@ -6,14 +6,14 @@ class Weekly_Data_Management extends MY_Controller {
 	}
 
 	public function index() {
-		
+
 		$this -> add();
 	}
 
 	public function add($data = array()) {
 		$access_level = $this -> session -> userdata('user_indicator');
-		if($access_level == "district_clerk"){
-			$district = $this -> session -> userdata('district_province_id'); 
+		if ($access_level == "district_clerk") {
+			$district = $this -> session -> userdata('district_province_id');
 			$data['facilities'] = Facilities::getDistrictFacilities($district);
 		}
 		$provinces = Province::getAll();
@@ -48,7 +48,7 @@ class Weekly_Data_Management extends MY_Controller {
 	}
 
 	public function delete_weekly_data($epiweek, $reporting_year, $district) {
-		$data['surveillance_data'] = Surveillance::getSurveillanceData($epiweek, $reporting_year, $district); 
+		$data['surveillance_data'] = Surveillance::getSurveillanceData($epiweek, $reporting_year, $district);
 		$data['title'] = "Delete Weekly Data";
 		$data['content_view'] = "delete_weekly_data_v";
 		$data['banner_text'] = "Delete Data";
@@ -60,18 +60,18 @@ class Weekly_Data_Management extends MY_Controller {
 		$surveillance_data = Surveillance::getSurveillanceData($epiweek, $reporting_year, $district);
 		$lab_data = Lab_Weekly::getWeeklyDistrictLabData($epiweek, $reporting_year, $district);
 		//Delete the data
-		foreach($surveillance_data as $disease_data){
-			$disease_data->delete();
+		foreach ($surveillance_data as $disease_data) {
+			$disease_data -> delete();
 		}
-		$lab_data->delete();
+		$lab_data -> delete();
 		//Log the action
-		$log = new Data_Delete_Log(); 
-		$log->Deleted_By = $this -> session -> userdata('user_id');
-		$log->District_Affected = $district;
-		$log->Epiweek = $epiweek;
-		$log->Reporting_Year = $reporting_year;
-		$log->Timestamp = date('U');
-		$log->save();
+		$log = new Data_Delete_Log();
+		$log -> Deleted_By = $this -> session -> userdata('user_id');
+		$log -> District_Affected = $district;
+		$log -> Epiweek = $epiweek;
+		$log -> Reporting_Year = $reporting_year;
+		$log -> Timestamp = date('U');
+		$log -> save();
 		redirect("data_delete_management");
 	}
 
@@ -117,7 +117,9 @@ class Weekly_Data_Management extends MY_Controller {
 				return;
 			}
 			$total_diseases = Disease::getTotal();
+
 			$timestamp = date('U');
+			$timestamp = date('d/m/Y');
 
 			$i = 0;
 			foreach ($diseases as $disease) {

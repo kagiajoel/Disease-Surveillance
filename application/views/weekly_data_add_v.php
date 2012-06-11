@@ -309,6 +309,16 @@ var edit_url = '<?php echo base_url()?>
 				?>
 			</select></td>
 		</tr>
+<<<<<<< HEAD
+=======
+		<tr>
+			<td><b>No. of Health Facility/Site reporting</b></td><td>
+			<input type="text" name="reporting_facilities" id="reporting_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $submitted;?>"/>
+			</td><td><b>No. of Health Facility/Site reports expected</b></td><td>
+			<input type="text" name="expected_facilities" id="expected_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $expected;?>"/>
+			</td>
+		</tr>
+>>>>>>> 0660fa74c7ed283e265533d3b72412a63f14c082
 		<?php
 		}
 else{?>
@@ -325,6 +335,7 @@ else{?>
 		</tr>
 		
 		<?php }?>
+<<<<<<< HEAD
 		<tr>
 			<td><b>No. of Health Facility/Site reporting</b></td><td>
 			<input type="text" name="reporting_facilities" id="reporting_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $submitted;?>"/>
@@ -332,6 +343,9 @@ else{?>
 			<input type="text" name="expected_facilities" id="expected_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $expected;?>"/>
 			</td>
 		</tr>
+=======
+		
+>>>>>>> 0660fa74c7ed283e265533d3b72412a63f14c082
 	</table>
 	<div id="data_exists_error" <?php
 		if ($existing_data == true) { echo "style='display:block'";

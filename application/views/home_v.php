@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 $this -> load -> helper('url');
 $this -> load -> helper('form');
 ?>
@@ -87,3 +88,7 @@ var chart = new FusionCharts('<?php echo base_url().'Scripts/FusionCharts/Charts
 					?>
 		</table>
 	</div>
+=======
+echo "Dashboards go here!";
+?>
+>>>>>>> 0660fa74c7ed283e265533d3b72412a63f14c082

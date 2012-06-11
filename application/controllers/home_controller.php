@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL ^ E_NOTICE);
+
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
@@ -9,11 +9,14 @@ class Home_Controller extends MY_Controller {
 	}
 
 	public function index() {
+
 		$this -> home();
 	}
 
 	public function home() {
+
 		$currentyear = date('Y');
+
 		$rights = User_Right::getRights($this -> session -> userdata('access_level'));
 		$menu_data = array();
 		$menus = array();
@@ -27,6 +30,7 @@ class Home_Controller extends MY_Controller {
 		$this -> session -> set_userdata($menu_data);
 		$this -> session -> set_userdata($menus);
 
+
 		$provinces = Province::getAll();
 		$epiweeks = Surveillance::getEpiweek();
 		$years = Surveillance::getYears();
@@ -39,6 +43,7 @@ class Home_Controller extends MY_Controller {
 		$data['diseases'] = $diseases;
 		$data['epidemiks'] = $epidemiks;
 		$data['scripts'] = array("FusionCharts/FusionCharts.js");
+
 		$data['title'] = "System Home";
 		$data['content_view'] = "home_v";
 		$data['banner_text'] = "System Home";
@@ -46,6 +51,7 @@ class Home_Controller extends MY_Controller {
 		$this -> load -> view("template", $data);
 
 	}
+
 
 	function diseaseTrendGraph($year, $disease) {
 		$epiweeks = Surveillance::getEpiweek();
