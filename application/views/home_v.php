@@ -59,10 +59,17 @@ var chart = new FusionCharts('<?php echo base_url().'Scripts/FusionCharts/Charts
 		</tr>
 	</table>
 	<?php echo form_close();?>
-
-	<div id="diseasetrends" class="graph_container" align="left" ></div>
-	<div id="positivities" class="graph_container" align="right" ></div>
-	<div id="epidemicdiseases">
+	<table>
+		<tr>
+			<td>
+				<div id="diseasetrends"></div>
+			</td>
+			<td>
+				<div id="positivities"></div>
+			</td>
+		</tr>
+	</table>
+	<!--<div id="epidemicdiseases">
 		<table>
 			<caption><strong>Epidemic Prone Disease Occurences</strong></caption>
 			<tr>
