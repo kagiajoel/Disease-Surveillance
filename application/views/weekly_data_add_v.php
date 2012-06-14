@@ -22,92 +22,97 @@ if (!isset($existing_data)) {
 	}
 </style>
 <script type="text/javascript">
-	$(function() {
-$("#entry-form").validationEngine();
-$("#confirm_variables").click(function() {
-$("#epiweek").attr("value", $("#predicted_epiweek").text());
-$("#weekending").attr("value", $("#predicted_weekending").text());
-$("#reporting_year").attr("value", $("#predicted_year").attr("value"));
-$('#prediction').slideUp('slow');
-});
-$("#province").change(function() {
-//Get the selected province
-var province = $(this).attr("value");
-$("#district").children('option').remove();
-$.each($("#district_container").children('option'), function(i, v) {
-var current_province = $(this).attr("province");
-if(current_province == province) {
-$("#district").append($("<option></option>").attr("value", $(this).attr("value")).text($(this).text()));
-} else if(province == 0) {
-$("#district").append($("<option></option>").attr("value", $(this).attr("value")).text($(this).text()));
-}
-});
-//Loop through the list of all districts and display the ones from this province
+		$(function() {
+	$("#entry-form").validationEngine();
+	$("#confirm_variables").click(function() {
+	$("#epiweek").attr("value", $("#predicted_epiweek").text());
+	$("#weekending").attr("value", $("#predicted_weekending").text());
+	$("#reporting_year").attr("value", $("#predicted_year").attr("value"));
+	$('#prediction').slideUp('slow');
+	});
+	
+	
+	$("#province").change(function() {
+	//Get the selected province
+	var province = $(this).attr("value");
+	$("#district").children('option').remove();
+	$.each($("#district_container").children('option'), function(i, v) {
+	var current_province = $(this).attr("province");
+	if(current_province == province) {
+	$("#district").append($("<option></option>").attr("value", $(this).attr("value")).text($(this).text()));
+	} else if(province == 0) {
+	$("#district").append($("<option></option>").attr("value", $(this).attr("value")).text($(this).text()));
+	}
+	});
+	//Loop through the list of all districts and display the ones from this province
 
-});
-$("#district").change(function() {
-if($("#epiweek").attr("value") > 0) {
-checkDistrictData();
-}
-});
+	});
+	
+	$("#district").change(function() {
+	if($("#epiweek").attr("value") > 0) {
+	checkDistrictData();
+	}
+	});
 
-$("#weekending").datepicker({
-altField : "#epiweek",
-altFormat : "DD,d MM, yy",
-firstDay : 1,
-changeYear : true,
-onClose : function(date, inst) {
-//Create a new date object from the date selected
-var new_date = new Date(date);
-//Retrieve the week number and reporting year for this date object
-var week_data = getWeek(new_date);
-$("#epiweek").attr("value", week_data[0]);
-$("#reporting_year").attr("value", week_data[1]);
-if($("#district").attr("value") > 0) {
-checkDistrictData();
-}
+	$("#weekending").datepicker({
+	altField : "#epiweek",
+	altFormat : "DD,d MM, yy",
+	firstDay : 1,
+	changeYear : true,
+	onClose : function(date, inst) {
+	//Create a new date object from the date selected
+	var new_date = new Date(date);
+	//Retrieve the week number and reporting year for this date object
+	var week_data = getWeek(new_date);
+	$("#epiweek").attr("value", week_data[0]);
+	$("#reporting_year").attr("value", week_data[1]);
+	if($("#district").attr("value") > 0) {
+	checkDistrictData();
+	}
 
-},
-beforeShowDay : function(date) {
-//Disable all days except sundays
-var day = date.getDay();
-return [(day != 1 && day != 2 && day != 3 && day != 4 && day != 5 && day != 6)];
-}
-});
-$(".zero_reporting").change(function() {
+	},
+	beforeShowDay : function(date) {
+	//Disable all days except sundays
+	var day = date.getDay();
+	return [(day != 1 && day != 2 && day != 3 && day != 4 && day != 5 && day != 6)];
+	}
+	});
+	$(".zero_reporting").change(function() {
 
-zeroReporting(this.id);
-});
-});
-/*
-* Function that checks if district data exists
-*/
-function checkDistrictData() {
-$("#data_exists_error").slideUp("slow");
-var epiweek = $("#epiweek").attr("value");
-var reporting_year = $("#reporting_year").attr("value");
-var district = $("#district").attr("value");
-var url =  '<?php echo base_url()?>'+"weekly_data_management/check_district_data/" + epiweek + "/" + reporting_year + "/" + district;
-$.get(url, function(data) {
-if(data == "yes") {
-var edit_url = '<?php echo base_url()?>
-	'+"weekly_data_management/edit_weekly_data/" + epiweek + "/" + reporting_year + "/" + district;
-	var error_html = "<p>Data for this district already exists! <a href='" + edit_url + "' class='link'>Click here</a> to edit the data instead!</p>";
-	$("#data_exists_error").html(error_html);
-	$("#data_exists_error").css("border-color", "red");
-	$("#data_exists_error").slideDown("slow");
-	} else {
+	zeroReporting(this.id);
+	});
+	});
+	/*
+	* Function that checks if district data exists
+	*/
+	function checkDistrictData() {
+	$("#data_exists_error").slideUp("slow");
+	var epiweek = $("#epiweek").attr("value");
+	var reporting_year = $("#reporting_year").attr("value");
+	var district = $("#district").attr("value");
+	var url =  '<?php echo base_url()?>
+		'+"weekly_data_management/check_district_data/" + epiweek + "/" + reporting_year + "/" + district;
+		$.get(url, function(data) {
+		if(data == "yes") {
+		var edit_url = '
+<?php echo base_url()?>
+		'+"weekly_data_management/edit_weekly_data/" + epiweek + "/" + reporting_year + "/" + district;
+		var error_html = "<p>Data for this district already exists! <a href='" + edit_url + "' class='link'>Click here</a> to edit the data instead!</p>";
+		$("#data_exists_error").html(error_html);
+		$("#data_exists_error").css("border-color", "red");
+		$("#data_exists_error").slideDown("slow");
+		} else {
 		$("#data_exists_error").html("<p>You can enter surveillance data for this district</p>");
 		$("#data_exists_error").css("border-color", "green");
 		$("#data_exists_error").slideDown("slow");
-	}
-	});
-	}
+		}
+		});
+		}
 
-	/*
-	 * Function that calculates the epiweek of a given date
-	 */
-	function getWeek(date) {
+		/*
+		* Function that calculates the epiweek of a given date
+		*/
+		function getWeek(date) {
 		var reporting_year = "";
 		var checkDate = new Date(date.getTime());
 		//Retrieve the reporting year from this date
@@ -127,28 +132,28 @@ var edit_url = '<?php echo base_url()?>
 		var week_number = Math.floor(Math.round((time - checkDate) / 86400000) / 7);
 		//If the number of days falling in the first week are greater than 4, increment the weeknumber by 1 since these days will be considered as the first week of the year
 		if(week_days_in_year >= 4) {
-			week_number += 1;
+		week_number += 1;
 		}
 		//If the week number is '0' assign the week number of the last week of the previous year
 		if(week_number == 0) {
-			//Set the year to the previous year
-			checkDate.setYear(checkDate.getFullYear() - 1);
-			//Retrieve the reporting year from this date
-			reporting_year = checkDate.getFullYear();
-			//set month as december
-			checkDate.setMonth(11);
-			//set date as 24th
-			checkDate.setDate(24);
-			//Call this function again to retrieve the week number of the 2nd last week of the previous year. 24th December is set as the date since it is guaranteed to be in this last week.
-			var last_week = arguments.callee(checkDate);
-			//Increment this week number to get the last week of that year
-			week_number = last_week[0] += 1;
+		//Set the year to the previous year
+		checkDate.setYear(checkDate.getFullYear() - 1);
+		//Retrieve the reporting year from this date
+		reporting_year = checkDate.getFullYear();
+		//set month as december
+		checkDate.setMonth(11);
+		//set date as 24th
+		checkDate.setDate(24);
+		//Call this function again to retrieve the week number of the 2nd last week of the previous year. 24th December is set as the date since it is guaranteed to be in this last week.
+		var last_week = arguments.callee(checkDate);
+		//Increment this week number to get the last week of that year
+		week_number = last_week[0] += 1;
 		}
 		var return_array = new Array(week_number, reporting_year);
 		return return_array;
-	}
+		}
 
-	function zeroReporting(id) {
+		function zeroReporting(id) {
 		var temp = id.split("_");
 		var disease = temp[1];
 		var lmcase = "lmcase_" + disease;
@@ -167,7 +172,7 @@ var edit_url = '<?php echo base_url()?>
 		$("#" + gmdeath).attr("value", "0");
 		var gfdeath = "gfdeath_" + disease;
 		$("#" + gfdeath).attr("value", "0");
-	}
+		}
 </script>
 <div class="view_content">
 	<?php if($editing == false){
@@ -273,7 +278,8 @@ var edit_url = '<?php echo base_url()?>
 			<input type="hidden" name="lab_id" id="lab_id" value="<?php echo $lab_id;?>"/>
 			</td>
 		</tr>
-		<?php if($this -> session -> userdata('user_indicator') != "district_clerk"){?>
+		<?php if($this -> session -> userdata('user_indicator') != "district_clerk"){
+		?>
 		<tr>
 			<td><b>Province: </b></td><td>
 			<select name="province" id="province">
@@ -309,8 +315,7 @@ var edit_url = '<?php echo base_url()?>
 				?>
 			</select></td>
 		</tr>
-<<<<<<< HEAD
-=======
+
 		<tr>
 			<td><b>No. of Health Facility/Site reporting</b></td><td>
 			<input type="text" name="reporting_facilities" id="reporting_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $submitted;?>"/>
@@ -318,11 +323,11 @@ var edit_url = '<?php echo base_url()?>
 			<input type="text" name="expected_facilities" id="expected_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $expected;?>"/>
 			</td>
 		</tr>
->>>>>>> 0660fa74c7ed283e265533d3b72412a63f14c082
 		<?php
 		}
-else{?>
-			<tr>
+		else{
+		?>
+		<tr>
 			<td><b>Facility: </b></td><td>
 			<select name="facility" id="facility">
 				<option value="0">Select Facility</option>
@@ -331,11 +336,10 @@ else{?>
 					echo '<option value="' . $facility -> id . '">' . $facility -> name . '</option>';
 				}//end foreach
 				?>
-			</select></td> 
+			</select></td>
 		</tr>
-		
 		<?php }?>
-<<<<<<< HEAD
+
 		<tr>
 			<td><b>No. of Health Facility/Site reporting</b></td><td>
 			<input type="text" name="reporting_facilities" id="reporting_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $submitted;?>"/>
@@ -343,17 +347,15 @@ else{?>
 			<input type="text" name="expected_facilities" id="expected_facilities" class="validate[required,custom[onlyNumberSp]]" value="<?php echo $expected;?>"/>
 			</td>
 		</tr>
-=======
-		
->>>>>>> 0660fa74c7ed283e265533d3b72412a63f14c082
+
 	</table>
 	<div id="data_exists_error" <?php
-		if ($existing_data == true) { echo "style='display:block'";
-		}
+	if ($existing_data == true) { echo "style='display:block'";
+	}
 	?>>
 		<?php
 		if ($existing_data == true) {
-			$edit_link = base_url()."weekly_data_management/edit_weekly_data/".$duplicate_epiweek."/".$duplicate_reporting_year."/". $duplicate_district[0]->id;
+			$edit_link = base_url() . "weekly_data_management/edit_weekly_data/" . $duplicate_epiweek . "/" . $duplicate_reporting_year . "/" . $duplicate_district[0] -> id;
 			echo "<p>Epiweek " . $duplicate_epiweek . " data for " . $duplicate_district[0] -> Name . " district already exists for " . $duplicate_reporting_year . ".</p><p><a class='link' style='margin:0' href='$edit_link'>Click Here</a> to edit the existing data or select different parameters.</p>";
 		}
 		?>

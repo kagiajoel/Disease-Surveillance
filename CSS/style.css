@@ -1,3 +1,45 @@
+.district{
+	text-align: right;
+	background: grey;
+	color: white;
+}
+.otherepidemictds{
+	text-align: center;
+	background: #CDC0B0;
+}
+#epidemictable td {
+	text-align:center;
+	background:transparent url("../Images/bg_td.gif") no-repeat bottom left;
+	border-right:1px solid #fff;
+	color:#fff;
+	height:40px;
+	font:bold 12px/18px verdana;
+}
+#linelister th {
+	text-align:center;
+	background: #EEE;
+	border-right:1px solid #fff;
+	font:bold 11px verdana;
+}
+#epidemictable td.on {background:transparent url("../Images/bg_td_on.gif") no-repeat bottom left;}
+#epidemictable th.on {
+	background:transparent url("../Images/bg_th_on.gif") no-repeat bottom left;
+	padding-bottom:9px;
+	
+}
+
+#epidemictable tfoot td {
+	background:transparent url("../Images/bg_foot_td.gif") no-repeat top left;
+	height:64px;
+	vertical-align:top;
+	padding-top:8px;
+}
+#epidemictable tfoot td.on {
+	background:transparent url("../Images/bg_foot_td_on.gif") no-repeat top left;
+	padding-top:16px;
+}
+#epidemictable td.side {background: transparent url("../Images/bg_foot_td_side.gif") no-repeat top left;}
+
 body {
 	font-family: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
 	color: #3F3F38;

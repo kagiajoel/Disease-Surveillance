@@ -1,5 +1,4 @@
 <?php
-error_reporting(E_ALL^E_NOTICE);
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
@@ -30,12 +29,10 @@ class Home_Controller extends MY_Controller {
 		$this -> session -> set_userdata($menu_data);
 		$this -> session -> set_userdata($menus);
 
-
 		$provinces = Province::getAll();
 		$epiweeks = Surveillance::getEpiweek();
 		$years = Surveillance::getYears();
 		$diseases = Diseases::getAllObjects();
-		$epidemiks = Surveillance::tableEpidemicProneDiseases($epiweek, $disease, $year);
 
 		$data['epiweeks'] = $epiweeks;
 		$data['provinces'] = $provinces;
@@ -51,7 +48,6 @@ class Home_Controller extends MY_Controller {
 		$this -> load -> view("template", $data);
 
 	}
-
 
 	function diseaseTrendGraph($year, $disease) {
 		$epiweeks = Surveillance::getEpiweek();
@@ -83,7 +79,7 @@ class Home_Controller extends MY_Controller {
 		echo $strXML;
 	}
 
-	function positivityGraph($year,$province,$epiweek) {
+	function positivityGraph($year, $province, $epiweek) {
 		$provinces = Province::getAll();
 		//$positivityData = Lab_Weekly::getPositivity($year, $epiweek, $province);
 
@@ -97,13 +93,11 @@ class Home_Controller extends MY_Controller {
 
 		$strXML .= "<dataset seriesName='Cases Above 5' color='F1683C' showValues='0'>";
 		foreach ($provinces as $province) {
-			
 
-/*			foreach ($positivityData as $positiveCases) {
+			/*			foreach ($positivityData as $positiveCases) {
 
-				
-			}*/
-			$x = Lab_Weekly::getPositivity($year, $province->id, $epiweek);
+			 }*/
+			$x = Lab_Weekly::getPositivity($year, $province -> id, $epiweek);
 			$above = $x -> Above;
 			$strXML .= "<set value='$above'/>";
 
@@ -113,7 +107,7 @@ class Home_Controller extends MY_Controller {
 		$strXML .= "<dataset seriesName='Cases Below 5' color='2AD62A' showValues='0'>";
 		foreach ($provinces as $province) {
 
-			$y = Lab_Weekly::getPositivity($year, $province->id, $epiweek);
+			$y = Lab_Weekly::getPositivity($year, $province -> id, $epiweek);
 			$below = $y -> Below;
 			$strXML .= "<set value='$below'/>";
 
@@ -150,10 +144,15 @@ class Home_Controller extends MY_Controller {
 		$epiweeks = Surveillance::getEpiweek();
 		$years = Surveillance::getYears();
 		$diseases = Diseases::getAllObjects();
-		$epidemiks = Surveillance::tableEpidemicProneDiseases($epiweek, $disease, $year);
+		
+		
+		$this -> load ->database();
+		$sql = 'select Districts.name as District, Lmcase,Gmcase,Lfcase,Gfcase from Surveillance,Districts,Diseases where Epiweek = ? and Disease = ? and Reporting_Year = ? and abs(Lmcase) != 0 and abs(Gmcase) != 0 and abs(Lfcase) != 0 and ABS(Gfcase) != 0  and surveillance.disease=diseases.id and surveillance.district=districts.id';
+		$query = $this -> db ->query($sql, array($epiweek,$disease,$year));
+		$data['epidemiks'] = $query ->result_array();
+		
 
 		$data['epiweeks'] = $epiweeks;
-		$data['epidemiks'] = $epidemiks;
 		$data['provinces'] = $provinces;
 		$data['years'] = $years;
 		$data['diseases'] = $diseases;

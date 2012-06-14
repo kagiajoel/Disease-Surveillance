@@ -152,6 +152,11 @@ $counter++;
 		if ($quick_link == "zoonotic_data_management") {echo "top_menu_active";
 		}
 	?>">Add Zoonotic Data</a>
+			
+		<a style="width:200px !important" href="<?php echo site_url('linelisted_data_management');?>" class="top_menu_link sub_menu_link last_link  <?php
+		if ($quick_link == "linelisted_data_management") {echo "top_menu_active";
+		}
+	?>">Add Line Listing Data</a>
 </div>
 <?php }?>
 <div id="main_wrapper"> 
