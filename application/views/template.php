@@ -34,6 +34,7 @@ if ($access_level == "nascop_staff") {
 <script src="<?php echo base_url().'Scripts/jquery.js'?>" type="text/javascript"></script> 
 <script src="<?php echo base_url().'Scripts/jquery-ui.js'?>" type="text/javascript"></script> 
 
+
 <?php
 if (isset($script_urls)) {
 	foreach ($script_urls as $script_url) {

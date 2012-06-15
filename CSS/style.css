@@ -1,3 +1,19 @@
+.greenbutton{
+	margin: 0 1.5em 1.2 em 0; 
+	line-height: 29px; 
+	vertical-align: bottom; 
+	border: 1px solid #50A6C2; 
+	color: white; 
+	text-shadow: 0 1px rgba(0,0,0,0.3); 
+	background-color: #50A6C2; 
+	display: inline-block; 
+	min-width: 46px; 
+	text-align: center; 
+	font-size: 30px;
+	padding: 0 8px; 
+	border-radius: 2px;
+}
+
 .district{
 	text-align: right;
 	background: grey;
