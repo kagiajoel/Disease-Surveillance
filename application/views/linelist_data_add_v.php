@@ -127,7 +127,7 @@ echo validation_errors('
 				?>
 			</select></td>
 			<td> Disease/Condition
-			<input type="text" name="disease" id="disease"/>
+			<input type="text" name="disease" id="disease" required/>
 			</td>
 		</tr>
 	</tbody>
@@ -224,7 +224,7 @@ echo validation_errors('
 		
 		<!--Names-->
 		<td>
-		<input type="names" name="names" style="width: 40px" />
+		<input type="names" name="names" style="width: 40px" required/>
 		</td>
 		
 		<!--Patient-->
@@ -243,7 +243,7 @@ echo validation_errors('
 		
 		<!--village-->
 		<td>
-		<input type="text" name="village" style="width: 40px"/>
+		<input type="text" name="village" style="width: 40px" required/>
 		</td>
 		
 		<!--sex-->
@@ -256,7 +256,7 @@ echo validation_errors('
 		
 		<!--age-->
 		<td>
-		<input type="text" name="age" style="width: 40px" />
+		<input type="text" name="age" style="width: 40px" required/>
 		</td>
 		
 		<!--facility-->
@@ -271,7 +271,7 @@ echo validation_errors('
 		
 		<!--dosage-->
 		<td>
-		<input type="text" name="dosage_number" style="width: 40px" />
+		<input required type="text" name="dosage_number" style="width: 40px" />
 		</td>
 		
 		<!--specimen-->
@@ -285,7 +285,7 @@ echo validation_errors('
 				<input type="text" name="specimen_type" style="width: 40px"/>
 				</td>
 				<td>
-				<input type="text" name="lab_results" style="width: 40px"/>	
+				<input required type="text" name="lab_results" style="width: 40px"/>	
 				</td>
 			</tr>
 		</table>
