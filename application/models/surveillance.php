@@ -155,9 +155,21 @@ class Surveillance extends Doctrine_Record {
 		$result = $query -> execute();
 		return $result[0];
 	}
+	
+	public function getFacilityData($epiweek, $year, $facility) {
+		$query = Doctrine_Query::create() -> select("id") -> from("surveillance") -> where("Reporting_Year='$year' and Epiweek='$epiweek' and Facility = '$facility'") -> limit(1);
+		$result = $query -> execute();
+		return $result[0];
+	}
 
 	public function getSurveillanceData($epiweek, $reporting_year, $district) {
 		$query = Doctrine_Query::create() -> select("*") -> from("surveillance") -> where("Reporting_Year='$reporting_year' and Epiweek='$epiweek' and District = '$district'");
+		$result = $query -> execute();
+		return $result;
+	}
+
+	public function getSurveillanceDataFacility($epiweek, $reporting_year, $facility) {
+		$query = Doctrine_Query::create() -> select("*") -> from("surveillance") -> where("Reporting_Year='$reporting_year' and Epiweek='$epiweek' and Facility = '$facility'");
 		$result = $query -> execute();
 		return $result;
 	}

@@ -16,8 +16,8 @@ class Facilities extends Doctrine_Record {
 		$this -> hasOne('Facility_Types as Type', array('local' => 'facilitytype', 'foreign' => 'id'));
 	}
 
-	public function getDistrictFacilities($District) {
-		$query = Doctrine_Query::create() -> select("facilitycode,Name") -> from("Facilities") -> where("District = '" . $District . "'");
+	public function getDistrictFacilities($district) {
+		$query = Doctrine_Query::create() -> select("facilitycode,Name") -> from("Facilities") -> where("District = '" . $district . "'");
 		$facilities = $query -> execute();
 		return $facilities;
 	}
@@ -26,6 +26,12 @@ class Facilities extends Doctrine_Record {
 		$query = Doctrine_Query::create() -> select("*") -> from("Facilities");
 		$facilities = $query -> execute();
 		return $facilities;
+	}
+	
+	public function getFacility($id) {
+		$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("id = '$id'");
+		$facilityData = $query -> execute();
+		return $facilityData;
 	}
 	
 	public static function search($search) {
@@ -40,31 +46,25 @@ class Facilities extends Doctrine_Record {
 		return $facility[0]['Name'];
 	}
 
-	public static function getTotalNumber($District = 0) {
-		if ($District == 0) {
+	public static function getTotalNumber($district = 0) {
+		if ($district == 0) {
 			$query = Doctrine_Query::create() -> select("COUNT(*) as Total_Facilities") -> from("Facilities");
-		} else if ($District > 0) {
-			$query = Doctrine_Query::create() -> select("COUNT(*) as Total_Facilities") -> from("Facilities") -> where("District = '$District'");
+		} else if ($district > 0) {
+			$query = Doctrine_Query::create() -> select("COUNT(*) as Total_Facilities") -> from("Facilities") -> where("District = '$district'");
 		}
 		$count = $query -> execute();
 		return $count[0] -> Total_Facilities;
 	}
 
-	public function getPagedFacilities($offset, $items, $District = 0) {
-		if ($District == 0) {
+	public function getPagedFacilities($offset, $items, $district = 0) {
+		if ($district == 0) {
 			$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> orderBy("Name") -> offset($offset) -> limit($items);
-		} else if ($District > 0) {
-			$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("District = '$District'") -> orderBy("Name") -> offset($offset) -> limit($items);
+		} else if ($district > 0) {
+			$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("District = '$district'") -> orderBy("Name") -> offset($offset) -> limit($items);
 		}
 
 		$facilities = $query -> execute();
 		return $facilities;
-	}
-
-	public static function getFacility($id) {
-		$query = Doctrine_Query::create() -> select("*") -> from("Facilities") -> where("id = '$id'");
-		$facility = $query -> execute();
-		return $facility[0];
 	}
 
 }

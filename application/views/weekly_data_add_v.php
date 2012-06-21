@@ -320,6 +320,21 @@ var edit_url = '<?php echo base_url()?>
 		}
 else{?>
 			<tr>
+				<td><b>District: </b></td>
+			<td>
+			<select name="district" id="district">
+				<option value="">Select District</option>
+				<?php
+				foreach ($districts as $district) {
+					if ($district -> id == $returned_district) {
+						echo '<option selected value="' . $district -> id . '" province="' . $district -> Province . '" >' . $district -> Name . '</option>';
+					} else {
+						echo '<option value="' . $district -> id . '" province="' . $district -> Province . '" >' . $district -> Name . '</option>';
+					}
+
+				}//end foreach
+				?>
+			</select></td>
 			<td><b>Facility: </b></td><td>
 			<select name="facility" id="facility">
 				<option value="0">Select Facility</option>
